@@ -1,5 +1,5 @@
 export async function handler(event, context) {
-    const recipient = event.queryStringParameters.name || "unknown";
+    const recipient = event.queryStringParameters.logo || "unknown";
   
     // Log to Logflare
     await fetch("https://api.logflare.app/logs", {
