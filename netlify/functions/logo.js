@@ -2,7 +2,11 @@
 export async function handler(event, context) {
   const recipient = event.queryStringParameters.logo || "unknown";
   const userAgent = event.headers["user-agent"] || "unknown";
-  const ip = event.headers["client-ip"] || "unknown";
+  const ip =
+    event.headers["x-forwarded-for"]?.split(",")[0]?.trim() || // most reliable
+    event.headers["x-real-ip"] ||
+    event.headers["client-ip"] ||
+    "unknown";
 
   // Post to Google Sheets
   await fetch("https://script.google.com/macros/s/AKfycbx-sTFjpVxvt1XS3BvHEcQ5FWabra8mHrunjppcR1YU0HXEXNSUf1zNqtYbxmF3OYc3/exec", {
